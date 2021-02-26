@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt-get update
-sudo apt-get install mysql-server expect -y
+sudo apt-get install mysql-server expect git -y
 MYSQL_ROOT_PASSWORD="dummie@123"
 
       SECURE_MYSQL=$(expect -c "
@@ -45,3 +45,7 @@ MYSQL_ROOT_PASSWORD="dummie@123"
       mysql -u root -e "FLUSH PRIVILEGES;"
 
       service mysql restart
+
+      git clone https://gitlab.com/movie-analyst/movie-analyst-database.git
+      cd movie-analyst-database/
+      sudo mysql --user="movieadm" --password=$MYSQL_ROOT_PASSWORD < table_creation_and_inserts.sql
