@@ -9,18 +9,18 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/focal64"
 
-  config.vm.provision :shell, inline: "sudo apt-get update"
-  config.vm.provision :shell, inline: "sudo apt-get install git -y"
+  #config.vm.provision :shell, inline: "sudo apt-get update"
+  #config.vm.provision :shell, inline: "sudo apt-get install git -y"
 
-  config.vm.provider "virtualbox" do |vb|
+  #config.vm.provider "virtualbox" do |vb|
   #   # Display the VirtualBox GUI when booting the machine
   #   vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
-      vb.memory = "512"
+      #vb.memory = "512"
       # Customize the amount of procesors on the VM
-      v.cpus = 2
-  # end
+      #vb.cpus = 2
+ # end
 
   config.vm.define "db" do |db|
     config.vm.provision :shell, path: "./provisions/database.sh"
