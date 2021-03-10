@@ -31,6 +31,8 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "api" do |api|
+    api.vm.provision "file", source: "./sources", destination: "nginx-sources"
+    api.vm.provision "file", source: "./provisions/setup-nginx.py", destination: "setup-nginx.py"
     api.vm.provision "file", source: "./provisions/setup-node.py", destination: "setup-node.py"
     api.vm.provision "file", source: "./provisions/setup-pm2.py", destination: "setup-pm2.py"
     api.vm.provision "file", source: "./provisions/setup-nodeapps.py", destination: "setup-nodeapps.py"
