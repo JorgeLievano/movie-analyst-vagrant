@@ -31,9 +31,11 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "api" do |api|
-    api.vm.provision :shell, path: "./provisions/api.sh"
+    api.vm.provision "file", source: "./provisions/setup-node.py", destination: "setup-node.py"
+    api.vm.provision "file", source: "./provisions/setup-pm2.py", destination: "setup-pm2.py"
+    api.vm.provision :shell, path: "./provisions/api-provision.sh"
     api.vm.network "private_network", ip: "#{mask}"+"42"
-    api.vm.network "forwarded_port", guest: 80, host: 9002
+    api.vm.network "forwarded_port", guest: 80, host: 9001
   end
 
   config.vm.define "ui" do |ui|
