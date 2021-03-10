@@ -9,6 +9,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/focal64"
 
+  mask = "192.168.100."
+
   #config.vm.provision :shell, inline: "sudo apt-get update"
   #config.vm.provision :shell, inline: "sudo apt-get install git -y"
 
@@ -23,7 +25,21 @@ Vagrant.configure("2") do |config|
  # end
 
   config.vm.define "db" do |db|
-    config.vm.provision :shell, path: "./provisions/database.sh"
+    db.vm.provision "file", source: "./provisions/setup-mysql.py", destination: "setup-mysql.py" 
+    db.vm.provision :shell, path: "./provisions/database-provision.sh"
+    db.vm.network "private_network", ip: "#{mask}"+"41"
+  end
+
+  config.vm.define "api" do |api|
+    api.vm.provision :shell, path: "./provisions/api.sh"
+    api.vm.network "private_network", ip: "#{mask}"+"42"
+    api.vm.network "forwarded_port", guest: 80, host: 9002
+  end
+
+  config.vm.define "ui" do |ui|
+    ui.vm.provision :shell, path: "./provisions/ui.sh"
+    ui.vm.network "private_network", ip: "#{mask}"+"43"
+    ui.vm.network "forwarded_port", guest: 80, host: 9003
   end
 
 end
