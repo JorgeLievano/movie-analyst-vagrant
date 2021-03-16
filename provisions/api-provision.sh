@@ -1,5 +1,6 @@
 #!/bin/bash
 echo ">>>>>> Start api provisioning script <<<<<<"
+cd python-scripts/
 echo ">>>>>> Start nginx setup <<<<<<"
 sudo python3 setup-nginx.py
 echo ">>>>>> Start node setup <<<<<<"

@@ -3,6 +3,8 @@ import pexpect
 import subprocess
 import os
 dummiepasswd = 'Dummie@123'
+log_user = os.getlogin()
+os.chdir(f'/home/{log_user}')
 
 # install mysql-server
 subprocess.run(['sudo', 'apt-get', 'update'], check=True)

@@ -3,6 +3,8 @@ import pexpect
 import os
 import shutil
 
+log_user = os.getlogin()
+os.chdir(f'/home/{log_user}')
 api_domain = 'api.movieanalyst.com'
 ui_domain = 'movieanalyst.com'
 

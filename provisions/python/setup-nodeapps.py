@@ -1,8 +1,9 @@
 import os
 import subprocess
 
-cwd = os.getcwd()
 log_user = os.getlogin()
+os.chdir(f'/home/{log_user}')
+cwd = os.getcwd()
 
 subprocess.run(['git', 'clone', 'https://gitlab.com/movie-analyst/movie-analyst-api.git'],check=True)
 os.chdir('./movie-analyst-api/')
