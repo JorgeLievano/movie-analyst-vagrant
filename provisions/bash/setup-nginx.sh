@@ -3,7 +3,7 @@ sudo apt-get update
 sudo apt-get install -y nginx expect
 
 sudo ufw allow OpenSSH
-sudo ufw allow 'Nginx Full'
+sudo ufw allow 'Nginx HTTP'
 
 ENABLED_UFW=$(expect -c "
 set timeout 10
