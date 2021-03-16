@@ -45,8 +45,19 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "bash_api" do |bash_api|
+    bash_api.vm.provision "file", source: "./sources", destination: "nginx-sources"
+    bash_api.vm.provision :shell, path: "./provisions/bash/setup-nginx.sh"
     bash_api.vm.provision :shell, path: "./provisions/bash/setup-node.sh"
     bash_api.vm.provision :shell, path: "./provisions/bash/setup-pm2.sh"
+    bash_api.vm.provision :shell do |s|
+      s.path = "./provisions/bash/setup-nodeapps.sh"
+      s.args = ["-g https://gitlab.com/movie-analyst/movie-analyst-api.git","-r ./movie-analyst-api/","-f server.js","-n api","-dapi.movieanalyst.com"]
+    end
+    bash_api.vm.provision :shell do |s|
+      s.path = "./provisions/bash/setup-nodeapps.sh"
+      s.args = ["-g https://gitlab.com/movie-analyst/movie-analyst-ui.git","-r ./movie-analyst-ui/","-f server.js","-n ui","-dmovieanalyst.com"]
+    end
+    bash_api.vm.provision :shell, inline: "sudo systemctl restart nginx"
     bash_api.vm.network "private_network", ip: "#{mask}"+"42"
     bash_api.vm.network "forwarded_port", guest: 80, host: 9001
   end
