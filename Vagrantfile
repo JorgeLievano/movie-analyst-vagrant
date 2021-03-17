@@ -44,6 +44,13 @@ Vagrant.configure("2") do |config|
     ui.vm.network "forwarded_port", guest: 80, host: 9003
   end
 
+  config.vm.define "bash_db", autostart: false do |bash_db|
+    bash_db.vm.provision "file", source: "./provisions/conf/environment-vars-db.sh", destination: "/tmp/movienalyst.sh"
+    bash_db.vm.provision :shell, inline: "sudo mv /tmp/movienalyst.sh /etc/profile.d/movienalyst.sh"
+    bash_db.vm.provision :shell, path: "./provisions/bash/setup-mysql.sh"
+    bash_db.vm.network "private_network", ip: "#{mask}"+"41"
+  end
+
   config.vm.define "bash_api" do |bash_api|
     bash_api.vm.provision "file", source: "./sources", destination: "nginx-sources"
     bash_api.vm.provision :shell, path: "./provisions/bash/setup-nginx.sh"

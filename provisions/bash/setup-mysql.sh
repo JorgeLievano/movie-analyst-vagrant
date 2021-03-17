@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo apt-get update
 sudo apt-get install mysql-server expect git -y
-MYSQL_ROOT_PASSWORD="dummie@123"
+#MYSQL_ROOT_PASSWORD="dummie@123"
 
       SECURE_MYSQL=$(expect -c "
 
